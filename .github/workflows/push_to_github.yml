@@ -19,6 +19,10 @@ jobs:
 
     - name: テキストファイルをコミットしてプッシュ
       run: |
+        git config --local user.email "tan0ry020204@gmail.com"
+        git config --local user.name "Ry02024"
         git add data.txt
         git commit -m "Add data from GitHub Pages input"
-        git push
+        git push origin master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
