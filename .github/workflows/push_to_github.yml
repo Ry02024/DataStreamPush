@@ -1,0 +1,24 @@
+name: Push Data to GitHub
+
+on:
+  repository_dispatch:
+    types: [trigger-push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: チェックアウトリポジトリ
+      uses: actions/checkout@v2
+
+    - name: Pythonをセットアップ
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: ファイルをコミットしてプッシュ
+      run: |
+        git add data.txt
+        git commit -m "Add data from Streamlit input"
+        git push
