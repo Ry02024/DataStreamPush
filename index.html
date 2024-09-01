@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>データ入力ページ</title>
+</head>
+<body>
+    <h1>データ入力フォーム</h1>
+    <form id="dataForm">
+        <textarea id="userData" rows="10" cols="50" placeholder="ここにデータを入力してください"></textarea><br><br>
+        <button type="submit">送信</button>
+    </form>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const userData = document.getElementById('userData').value;
+
+            fetch('https://api.github.com/repos/Ry02024/DataStreamPush/dispatches', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'token YOUR_GITHUB_TOKEN',
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    event_type: 'trigger-push',
+                    client_payload: {
+                        data: userData
+                    }
+                })
+            }).then(response => {
+                if (response.status === 204) {
+                    alert('データが送信されました。');
+                } else {
+                    alert('データ送信に失敗しました。');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
