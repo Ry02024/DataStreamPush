@@ -12,13 +12,13 @@ jobs:
     - name: チェックアウトリポジトリ
       uses: actions/checkout@v2
 
-    - name: Pythonをセットアップ
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
+    - name: Pythonスクリプトを実行してデータをテキストファイルに保存
+      run: |
+        echo "${{ github.event.client_payload.data }}" > input_data.txt
+        python save_data.py
 
-    - name: ファイルをコミットしてプッシュ
+    - name: テキストファイルをコミットしてプッシュ
       run: |
         git add data.txt
-        git commit -m "Add data from Streamlit input"
+        git commit -m "Add data from GitHub Pages input"
         git push
